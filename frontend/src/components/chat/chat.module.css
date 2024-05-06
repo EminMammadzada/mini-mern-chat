@@ -1,0 +1,84 @@
+.chat {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    /* Ensure children occupy full width */
+    flex-direction: column;
+    /* Arrange children vertically */
+}
+
+.header {
+    margin: 0 auto;
+    background-color: #666360;
+    /* Change header color */
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+    
+    box-sizing: border-box;
+    /* Ensure padding is included in width calculation */
+}
+
+.header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: white;
+    /* Change text color to white */
+}
+
+.header p {
+    margin-top: 8px;
+    /* Increase space between last seen and user's name */
+    margin-bottom: 0;
+    /* Remove margin from bottom */
+    font-size: 14px;
+    color: #ccc;
+    /* Change text color to gray */
+}
+
+.messages {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    /* Expand to fill remaining space */
+    padding: 10px;
+    overflow-y: auto;
+    background-color: #c7c5c2;
+}
+
+.new-message {
+    display: flex;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+}
+
+.new-message textarea {
+    flex: 1;
+    /* Take remaining space */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow-y: auto;
+    margin-right: 10px;
+    resize: none;
+    height: 50px;
+    /* Add some space between textarea and button */
+}
+
+.new-message button {
+    padding: 8px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.new-message button i {
+    font-size: 3rem;
+    /* Adjust icon size */
+    color: #807878;
+    /* Adjust icon color */
+}
