@@ -1,26 +1,15 @@
 import classes from "./app-window.module.css";
-
-import Conversations from "../conversations/conversations";
-import Chat from "../chat/chat";
-import { useChat } from "../../store/chatContext";
+import { useUser } from "../../store/userContext";
+import Login from "../login/login";
+import MainWindow from "../main-window/main-window";
 
 export default function AppWindow() {
-  const { selectedChat } = useChat();
-
-  let content = (
-    <div className={classes.fallback}>
-      <p>No Chat Selected</p>
-    </div>
-  );
-
-  if (selectedChat) {
-    content = <Chat />;
-  }
+  const { selectedUser } = useUser();
 
   return (
     <div className={classes.window}>
-      <Conversations />
-      {content}
+      {selectedUser && <MainWindow />}
+      {!selectedUser && <Login />}
     </div>
   );
 }

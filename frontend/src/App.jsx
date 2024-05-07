@@ -1,11 +1,14 @@
 import AppWindow from "./components/app-window/app-window";
 import { ChatProvider } from "./store/chatContext";
+import { UserProvider } from "./store/userContext";
 
 function App() {
   return (
-    <ChatProvider>
-      <AppWindow />
-    </ChatProvider>
+    <UserProvider>
+      <ChatProvider>
+        <AppWindow />
+      </ChatProvider>
+    </UserProvider>
   );
 }
 
