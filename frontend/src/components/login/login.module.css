@@ -1,0 +1,58 @@
+.container {
+    margin: 0 auto;
+    transform: translateY(25%)
+}
+
+.header {
+    text-align: center;
+    /* Center the header text */
+    margin-bottom: 20px;
+    /* Space below the header */
+}
+
+.userContainer {
+    list-style-type: none;
+    /* Remove bullet points */
+    padding: 0;
+    /* Remove padding */
+    display: flex;
+    /* Flex container for items */
+    flex-wrap: wrap;
+    /* Allow multiple rows */
+    justify-content: center;
+    /* Center items horizontally */
+    gap: 10px;
+    /* Space between items */
+}
+
+.userBox {
+    cursor: pointer;
+    color: black;
+    font-weight: bold;
+    /* Pointer cursor on hover */
+    padding: 20px;
+    /* Padding inside each box */
+    background-color: #f0f0f0;
+    /* Light grey background */
+    border-radius: 5px;
+    /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    transition: background-color 0.3s;
+    /* Smooth transition for hover effect */
+}
+
+.userBox:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.2);
+    transition: ease-in 0.2s;
+    /* Slightly darker on hover */
+}
+
+.userBox:nth-child(odd) {
+    background-color: #a39d9d;
+}
+
+.userBox:nth-child(even) {
+    background-color: #817e78;
+}
