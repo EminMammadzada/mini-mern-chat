@@ -1,12 +1,6 @@
 /* eslint-disable react/prop-types */
 import classes from "./message-bubble.module.css";
-
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  return `${date.toLocaleDateString()} at ${date.toLocaleTimeString([], {
-    timeStyle: "short",
-  })}`;
-};
+import { formatDate } from "../../util/format-date";
 
 const MessageBubble = ({ text, isSender, date }) => {
   return (
