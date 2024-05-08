@@ -4,6 +4,7 @@ const { newMessageRouter } = require("./routes/new-message");
 const { getMessageRouter } = require("./routes/get-messages");
 const { getUsersRouter } = require("./routes/get-users");
 const cors = require("cors");
+const { getConversationsRouter } = require("./routes/get-conversations");
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(bodyParser.json());
 
 app.use(newMessageRouter);
 app.use(getMessageRouter);
+app.use(getConversationsRouter);
 app.use(getUsersRouter);
 
 module.exports = app;
