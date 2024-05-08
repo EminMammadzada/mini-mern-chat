@@ -48,6 +48,7 @@ const ChatWindow = () => {
               <MessageBubble
                 key={message["_id"]}
                 text={message.message}
+                date={message.date}
                 isSender={message.senderId == selectedUser.id}
               />
             ))}
