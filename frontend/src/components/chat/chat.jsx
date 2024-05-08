@@ -1,5 +1,5 @@
 import classes from "./chat.module.css";
-import { conversations } from "../../dummy_data";
+// import { conversations } from "../../dummy_data";
 import { messages } from "../../dummy_data";
 
 import { useChat } from "../../store/chatContext";
@@ -10,9 +10,9 @@ import MessageBubble from "../message-bubble/message-bubble";
 const ChatWindow = () => {
   const { selectedChat } = useChat();
   const messageRef = useRef();
-  const username = conversations.find(
-    (conversation) => conversation.id === selectedChat
-  )["name"];
+  // const username = conversations.find(
+  //   (conversation) => conversation.id === selectedChat
+  // )["name"];
 
   const handleSendText = () => {
     const message = messageRef.current.value.trim();
@@ -25,7 +25,7 @@ const ChatWindow = () => {
   return (
     <div className={classes.chat}>
       <header className={classes.header}>
-        <h2>{username}</h2>
+        {/* <h2>{username}</h2> */}
         <p>Last Seen: Yesterday at 10:30 PM</p>
       </header>
       <div className={classes.messages}>
