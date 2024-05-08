@@ -20,8 +20,8 @@ export default function Conversations() {
     error,
   } = useHttp(memoizedFetchConversations, []);
 
-  const handleConversationClick = (conversationId) => {
-    setSelectedChat(conversationId);
+  const handleConversationClick = (conversation) => {
+    setSelectedChat(conversation);
   };
 
   return (
@@ -33,9 +33,7 @@ export default function Conversations() {
         <ul>
           {availableConversations.map((conversation) => (
             <li
-              onClick={() =>
-                handleConversationClick(conversation.conversationId)
-              }
+              onClick={() => handleConversationClick(conversation)}
               key={conversation.conversationId}
             >
               {conversation.otherParticipant}
