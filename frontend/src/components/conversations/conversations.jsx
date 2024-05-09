@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import classes from "./conversations.module.css";
 import { useChat } from "../../store/chatContext";
 import { useUser } from "../../store/userContext";
@@ -18,11 +18,16 @@ export default function Conversations() {
     isFetching,
     fetchedData: availableConversations,
     error,
+    executeFetch,
   } = useHttp(memoizedFetchConversations, []);
 
   const handleConversationClick = (conversation) => {
     setSelectedChat(conversation);
   };
+
+  useEffect(() => {
+    executeFetch();
+  }, [executeFetch]);
 
   return (
     <div className={classes.sidebar}>
@@ -36,7 +41,7 @@ export default function Conversations() {
               onClick={() => handleConversationClick(conversation)}
               key={conversation.conversationId}
             >
-              {conversation.otherParticipant}
+              {conversation.otherParticipant[0].username}
             </li>
           ))}
         </ul>

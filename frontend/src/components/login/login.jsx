@@ -2,13 +2,19 @@ import useHttp from "../../hooks/useHttp";
 import classes from "./login.module.css";
 import { fetchAvailableUsers } from "../../http";
 import { useUser } from "../../store/userContext";
+import { useEffect } from "react";
 
 export default function Login() {
   const {
     isFetching,
     fetchedData: availableUsers,
     error,
+    executeFetch,
   } = useHttp(fetchAvailableUsers, []);
+
+  useEffect(() => {
+    executeFetch();
+  }, [executeFetch]);
 
   const { setSelectedUser } = useUser();
 

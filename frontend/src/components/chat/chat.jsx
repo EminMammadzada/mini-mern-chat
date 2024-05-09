@@ -1,41 +1,55 @@
 import classes from "./chat.module.css";
 import { useChat } from "../../store/chatContext";
 import useHttp from "../../hooks/useHttp";
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useEffect } from "react";
 
 import MessageBubble from "../message-bubble/message-bubble";
-import { fetchAvailableConversationMessages } from "../../http";
+import { fetchAvailableConversationMessages, sendMessage } from "../../http";
 import { useUser } from "../../store/userContext";
 
 const ChatWindow = () => {
   const { selectedChat } = useChat();
   const { selectedUser } = useUser();
   const messageRef = useRef();
-  const otherParticipant = selectedChat.otherParticipant;
-
+  const otherParticipant = selectedChat.otherParticipant[0];
   // Memoize fetch function
   const memoizedFetchConversations = useCallback(() => {
     return fetchAvailableConversationMessages(selectedChat.conversationId);
   }, [selectedChat.conversationId]);
 
+  const memoizedSendMessage = useCallback(() => {
+    return sendMessage(
+      selectedUser.id,
+      otherParticipant.id,
+      messageRef.current.value
+    );
+  }, [selectedUser, otherParticipant]);
+
   const {
     isFetching,
     fetchedData: availableConversationMessages,
     error,
+    executeFetch: executeGetMessages,
   } = useHttp(memoizedFetchConversations, []);
+
+  const { error: sendError, executeFetch } = useHttp(memoizedSendMessage, []);
 
   const handleSendText = () => {
     const message = messageRef.current.value.trim();
     if (message) {
-      console.log("Message sent: ", message);
+      executeFetch();
       messageRef.current.value = "";
     }
   };
 
+  useEffect(() => {
+    executeGetMessages();
+  }, [executeGetMessages]);
+
   return (
     <div className={classes.chat}>
       <header className={classes.header}>
-        <h2>{otherParticipant}</h2>
+        <h2>{otherParticipant.username}</h2>
         {/* TODO: include real last seen date */}
         <p>Last Seen: Yesterday at 10:30 PM</p>
       </header>
@@ -54,6 +68,11 @@ const ChatWindow = () => {
             ))}
           </div>
         )}
+      {sendError && (
+        <div>
+          Something went wrong when sending the message {sendError.message}
+        </div>
+      )}
       <div className={classes["new-message"]}>
         <textarea ref={messageRef} placeholder="Type your message..." />
         <button onClick={handleSendText}>

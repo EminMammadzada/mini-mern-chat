@@ -17,11 +17,9 @@ router.get("/api/users/:userId/conversations", async (req, res) => {
     const results = conversations.map((conversation) => {
       const { participants } = conversation;
       // Filter out the current user's ID and return only other participants' names
-      const otherParticipant = participants
-        .filter(
-          (participant) => participant._id.toString() !== userId.toString()
-        )
-        .map((participant) => participant.username)[0];
+      const otherParticipant = participants.filter(
+        (participant) => participant._id.toString() !== userId.toString()
+      );
       return {
         conversationId: conversation._id,
         otherParticipant,

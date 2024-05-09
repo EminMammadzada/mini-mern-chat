@@ -34,3 +34,18 @@ export async function fetchAvailableConversationMessages(conversationId) {
   console.log(resData);
   return resData.messages.messages;
 }
+
+export async function sendMessage(senderId, receiverId, message) {
+  console.log(receiverId, message, senderId);
+  const response = await fetch(`http://localhost:3000/api/messages`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify({ senderId, receiverId, message }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch conversation messages");
+  }
+}
