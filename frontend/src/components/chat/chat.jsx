@@ -1,5 +1,6 @@
 import classes from "./chat.module.css";
 import { useChat } from "../../store/chatContext";
+import { useSocket } from "../../store/socketContext";
 import useHttp from "../../hooks/useHttp";
 import { useRef, useCallback, useEffect } from "react";
 
@@ -10,6 +11,7 @@ import { useUser } from "../../store/userContext";
 const ChatWindow = () => {
   const { selectedChat } = useChat();
   const { selectedUser } = useUser();
+  const { socket } = useSocket();
   const messageRef = useRef();
   const otherParticipant = selectedChat.otherParticipant[0];
   // Memoize fetch function
@@ -29,6 +31,7 @@ const ChatWindow = () => {
     isFetching,
     fetchedData: availableConversationMessages,
     error,
+    setFetchedData: setAvailableConversationMessages,
     executeFetch: executeGetMessages,
   } = useHttp(memoizedFetchConversations, []);
 
@@ -44,7 +47,23 @@ const ChatWindow = () => {
 
   useEffect(() => {
     executeGetMessages();
-  }, [executeGetMessages]);
+    if (socket == null) {
+      console.log("no socket on the client");
+      return;
+    }
+
+    console.log("socket on the client");
+
+    socket.on("newMessage", (message) => {
+      console.log("client received", message);
+      setAvailableConversationMessages((prevMessages) => [
+        ...prevMessages,
+        message,
+      ]);
+    });
+
+    return () => socket.off("newMessage");
+  }, [executeGetMessages, socket, setAvailableConversationMessages]);
 
   return (
     <div className={classes.chat}>

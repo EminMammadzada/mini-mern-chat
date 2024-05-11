@@ -13,14 +13,13 @@ function initializeSocketServer(httpServer) {
   });
 
   io.on("connection", (socket) => {
-    console.log("Connection established, ", socket.id);
+    // store the users that are currently online
     const userId = socket.handshake.query.userId;
     if (userId) {
       userSocketMap[userId] = socket.id;
     }
     socket.on("disconnect", () => {
       delete userSocketMap[userId];
-      console.log(`User with socket ID ${socket.id} disconnected`);
     });
   });
 

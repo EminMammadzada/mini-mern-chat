@@ -1,5 +1,4 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const Conversation = require("../models/conversation");
 
 const router = express.Router();
@@ -27,7 +26,7 @@ router.get("/api/users/:userId/conversations", async (req, res) => {
     });
     return res.status(200).json({ conversations: results });
   } catch (error) {
-    console.log("Something went wrong: ,", error);
+    return res.status(400).json({ error });
   }
 });
 

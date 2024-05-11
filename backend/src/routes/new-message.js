@@ -24,6 +24,8 @@ router.post("/api/messages", async (req, res) => {
   });
 
   try {
+    // emit the event both to receiver of the message and the sender
+    // so the new message reflects for both in real time
     const eventReceivers = [
       getReceiverSocketId(receiverId),
       getReceiverSocketId(senderId),
@@ -33,7 +35,7 @@ router.post("/api/messages", async (req, res) => {
         io.to(receiverSocketId).emit("newMessage", newMessage);
       });
     } else {
-      console.log("receiver socket not online");
+      return res.status(400).json({ message: "Receiving socket not online" });
     }
 
     await newMessage.save();
@@ -47,7 +49,6 @@ router.post("/api/messages", async (req, res) => {
       .status(201)
       .json({ message: "Message and conversation updated successfully." });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({ error: error.message });
   }
 });
