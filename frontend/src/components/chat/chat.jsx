@@ -48,14 +48,10 @@ const ChatWindow = () => {
   useEffect(() => {
     executeGetMessages();
     if (socket == null) {
-      console.log("no socket on the client");
       return;
     }
 
-    console.log("socket on the client");
-
     socket.on("newMessage", (message) => {
-      console.log("client received", message);
       setAvailableConversationMessages((prevMessages) => [
         ...prevMessages,
         message,
