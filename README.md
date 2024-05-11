@@ -31,13 +31,16 @@ To get the app running locally on your machine, follow these steps:
   ```cd frontend && npm i``` <br>
   ```cd backend && npm i```
 
-3. Open 3 separate terminal windows for frontend, backend, and mongodb servers
-4. Run the servers
+3. Seed the database
+  ```cd backend/src/util && node seedDB.js```
+  
+4. Open 3 separate terminal windows for frontend, backend, and mongodb servers
+5. Run the servers
    - Frontend: ```cd frontend && npm run dev```
    - Backend:  ```cd backend && npm run dev```
    - Mongo: ```mongo```
 
-5. Navigate to http://localhost:5173 in your browser to view the app.
+6. Navigate to http://localhost:5173 in your browser to view the app.
 
 ### Demo
 
