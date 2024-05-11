@@ -2,9 +2,11 @@ const express = require("express");
 const router = express.Router();
 const Message = require("../models/message");
 const Conversation = require("../models/conversation");
+const { getReceiverSocketId } = require("../socket/socket");
 
 router.post("/api/messages", async (req, res) => {
   const { message, senderId, receiverId } = req.body;
+  const io = req.app.get("io");
 
   // Validate required fields
   if (!message || !senderId || !receiverId) {
@@ -22,6 +24,18 @@ router.post("/api/messages", async (req, res) => {
   });
 
   try {
+    const eventReceivers = [
+      getReceiverSocketId(receiverId),
+      getReceiverSocketId(senderId),
+    ];
+    if (eventReceivers && io) {
+      eventReceivers.forEach((receiverSocketId) => {
+        io.to(receiverSocketId).emit("newMessage", newMessage);
+      });
+    } else {
+      console.log("receiver socket not online");
+    }
+
     await newMessage.save();
     // Save the message in the conversation
     let conversation = await Conversation.findOneAndUpdate(
@@ -33,6 +47,7 @@ router.post("/api/messages", async (req, res) => {
       .status(201)
       .json({ message: "Message and conversation updated successfully." });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ error: error.message });
   }
 });
